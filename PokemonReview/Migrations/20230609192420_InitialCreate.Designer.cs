@@ -12,7 +12,7 @@ using PokemonReview.Data;
 namespace PokemonReview.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230510202929_InitialCreate")]
+    [Migration("20230609192420_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
