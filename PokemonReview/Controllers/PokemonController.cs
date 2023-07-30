@@ -14,11 +14,13 @@ namespace PokemonReview.Controllers
     {
         private readonly IPokemonRepository _pokemonRepository;
         private readonly IMapper _mapper;
+        private readonly DataContext _context;
 
-        public PokemonController(IPokemonRepository pokemonRepository, IMapper mapper)
+        public PokemonController(IPokemonRepository pokemonRepository, IMapper mapper, DataContext context)
         {
             _pokemonRepository = pokemonRepository;
             _mapper = mapper;
+            _context = context;
         }
 
 
@@ -57,6 +59,16 @@ namespace PokemonReview.Controllers
             var rating = _pokemonRepository.GetPokemonRating(pokeId);
             if (!ModelState.IsValid) return BadRequest(ModelState);
             return Ok(rating);
+        }
+
+        [HttpPost]
+        [Route("/pokemons")]
+        public ActionResult AddPokemon(PokemonDTO model)
+        {
+            _context.Pokemon.Add(_pokemonRepository.ToPokemon(model));
+            _context.SaveChanges();
+
+            return Ok(model);
         }
     }
 }

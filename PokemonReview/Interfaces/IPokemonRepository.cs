@@ -1,4 +1,5 @@
-﻿using PokemonReview.Models;
+﻿using PokemonReview.DTO;
+using PokemonReview.Models;
 
 namespace PokemonReview.Interfaces
 {
@@ -10,5 +11,8 @@ namespace PokemonReview.Interfaces
 
         decimal GetPokemonRating(int pokeId);
         bool PokemonExists (int pokeId);
+        Pokemon ToPokemon(PokemonDTO model);
+
+
     }
 }

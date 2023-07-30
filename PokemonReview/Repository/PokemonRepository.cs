@@ -1,10 +1,13 @@
-﻿using PokemonReview.Data;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using PokemonReview.Data;
+using PokemonReview.DTO;
 using PokemonReview.Interfaces;
 using PokemonReview.Models;
 
 namespace PokemonReview.Repository
 {
-    public class PokemonRepository :IPokemonRepository
+    public class PokemonRepository : IPokemonRepository
     {
 
         private readonly DataContext _context;
@@ -27,6 +30,9 @@ namespace PokemonReview.Repository
             return _context.Pokemon.Where(p => p.Name == name).FirstOrDefault();
         }
 
+
+
+
         public decimal GetPokemonRating(int pokeId)
         {
             var review = _context.Reviews.Where(p => p.Pokemon.Id == pokeId);
@@ -38,6 +44,16 @@ namespace PokemonReview.Repository
         public bool PokemonExists(int pokeId)
         {
             return _context.Pokemon.Any(p =>  p.Id == pokeId);
+        }
+
+        public Pokemon ToPokemon(PokemonDTO model)
+        {
+            return new Pokemon
+            {
+                BirthDate = model.BirthDate,
+                Id = model.Id,
+                Name = model.Name,
+            };
         }
     }
 }
